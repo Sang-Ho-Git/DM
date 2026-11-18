@@ -3,6 +3,20 @@
   const $ = (s) => document.querySelector(s);
   const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
 
+  // 복사·오른쪽 클릭·이미지 끌기 막기 (연락처와 입력칸은 허용)
+  const COPYABLE = 'input, textarea, .contact-list, .site-footer';
+  const allowedAt = (node) => {
+    const el = node && (node.nodeType === 1 ? node : node.parentElement);
+    return !!(el && el.closest(COPYABLE));
+  };
+  const selectionAllowed = () => {
+    const sel = window.getSelection();
+    if (!sel || sel.isCollapsed) return allowedAt(document.activeElement);
+    return allowedAt(sel.anchorNode) && allowedAt(sel.focusNode);
+  };
+  ['copy', 'cut'].forEach((type) => document.addEventListener(type, (e) => { if (!selectionAllowed()) e.preventDefault(); }));
+  ['contextmenu', 'dragstart', 'selectstart'].forEach((type) => document.addEventListener(type, (e) => { if (!allowedAt(e.target)) e.preventDefault(); }));
+
   // 모바일 메뉴
   const toggle = $('.nav-toggle');
   const nav = $('#site-nav');

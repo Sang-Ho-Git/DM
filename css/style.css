@@ -30,6 +30,10 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+/* 글자 드래그·길게 눌러 복사 막기 — 연락처(오시는 길 목록, 바닥글)와 입력칸은 예외 */
+body { -webkit-user-select: none; user-select: none; -webkit-touch-callout: none; }
+input, textarea, .contact-list, .site-footer { -webkit-user-select: text; user-select: text; -webkit-touch-callout: default; }
+img, svg image { -webkit-user-drag: none; }
 /* 혹시 다른 요소가 넘쳐도 화면 옆이 보이지 않게 한 번 더 막음 */
 html, body { overflow-x: hidden; }
 @supports (overflow: clip) { html, body { overflow-x: clip; } }
