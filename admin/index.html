@@ -1,0 +1,144 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex">
+  <title>관리자 | 동명측량설계사무소</title>
+  <link rel="icon" href="../img/favicon.ico" sizes="any">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+  <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+  <header class="bar">
+    <div class="bar-inner">
+      <a class="brand" href="./"><img src="../img/logo-hanja-gold.png" alt="" width="46" height="24"><span>홈페이지 관리</span></a>
+      <nav class="tabs" role="tablist">
+        <button role="tab" data-tab="projects" aria-selected="true">실적</button>
+        <button role="tab" data-tab="hero">첫 화면·업무</button>
+        <button role="tab" data-tab="process">진행 절차</button>
+        <button role="tab" data-tab="company">연락처·검색</button>
+      </nav>
+      <div class="bar-actions">
+        <span class="status" id="status" aria-live="polite"></span>
+        <a class="btn btn-quiet" href="../" target="_blank" rel="noopener">사이트 보기</a>
+        <button class="btn btn-primary" id="save" disabled>저장</button>
+      </div>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <p class="load-error" id="load-error" hidden></p>
+
+    <!-- 실적 -->
+    <section class="panel" data-panel="projects">
+      <div class="panel-head">
+        <div>
+          <h1>인허가 실적</h1>
+          <p class="hint">사이트에는 연도 최신순으로 보입니다. 같은 연도 안에서는 나중에 추가한 실적이 먼저 나옵니다</p>
+        </div>
+        <button class="btn btn-primary" id="add-project">실적 추가</button>
+      </div>
+      <div class="toolbar">
+        <input type="search" id="p-search" placeholder="사업명·지역 검색">
+        <select id="p-cat"><option value="">모든 분류</option></select>
+        <select id="p-year"><option value="">모든 연도</option></select>
+        <span class="count" id="p-count"></span>
+      </div>
+      <div class="table-wrap">
+        <table class="table">
+          <thead><tr><th class="c-year">연도</th><th class="c-cat">분류</th><th>사업명</th><th class="c-meta">규모·용도지역</th><th class="c-act"><span class="sr-only">관리</span></th></tr></thead>
+          <tbody id="p-rows"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- 첫 화면·업무 -->
+    <section class="panel" data-panel="hero" hidden>
+      <h1>첫 화면</h1>
+      <div class="card">
+        <label class="field"><span>제목 위 작은 글씨</span><input data-bind="hero.eyebrow"></label>
+        <label class="field"><span>큰 제목 <em>줄을 바꾸려면 Enter</em></span><textarea rows="2" data-bind="hero.title"></textarea></label>
+        <label class="field"><span>안내 문장</span><textarea rows="3" data-bind="hero.lead"></textarea></label>
+      </div>
+
+      <h1>업무 안내</h1>
+      <div class="card">
+        <label class="field"><span>설명 한 줄</span><input data-bind="services.lead"></label>
+      </div>
+      <div class="list" id="services"></div>
+      <button class="btn btn-quiet add-row" data-add="services">업무 추가</button>
+      <div class="card">
+        <label class="field"><span>아래 덧붙이는 문장</span><textarea rows="2" data-bind="services.more"></textarea></label>
+      </div>
+    </section>
+
+    <!-- 진행 절차 -->
+    <section class="panel" data-panel="process" hidden>
+      <h1>진행 절차</h1>
+      <p class="hint">번호(01, 02…)는 순서대로 자동으로 붙습니다</p>
+      <div class="list" id="steps"></div>
+      <button class="btn btn-quiet add-row" data-add="steps">단계 추가</button>
+
+      <h1>상담 준비물</h1>
+      <div class="card">
+        <label class="field"><span>제목</span><input data-bind="contact.tipsTitle"></label>
+      </div>
+      <div class="list" id="tips"></div>
+      <button class="btn btn-quiet add-row" data-add="tips">항목 추가</button>
+    </section>
+
+    <!-- 연락처·검색 -->
+    <section class="panel" data-panel="company" hidden>
+      <h1>사무소 정보</h1>
+      <div class="card grid-2">
+        <label class="field"><span>사무소 이름</span><input data-bind="company.name" required></label>
+        <label class="field"><span>영문 이름</span><input data-bind="company.nameEn"></label>
+        <label class="field"><span>대표</span><input data-bind="company.ceo"></label>
+        <label class="field"><span>우편번호</span><input data-bind="company.zip" inputmode="numeric"></label>
+        <label class="field span-2"><span>주소 <em>네이버 지도 링크도 이 주소로 만들어집니다</em></span><input data-bind="company.address"></label>
+        <label class="field span-2"><span>상세 주소</span><input data-bind="company.addressDetail"></label>
+        <label class="field"><span>전화</span><input data-bind="company.tel" inputmode="tel" required></label>
+        <label class="field"><span>휴대폰</span><input data-bind="company.mobile" inputmode="tel"></label>
+        <label class="field"><span>팩스</span><input data-bind="company.fax" inputmode="tel"></label>
+        <label class="field"><span>이메일</span><input data-bind="company.email" type="email"></label>
+      </div>
+
+      <h1>검색 결과에 보이는 글</h1>
+      <div class="card">
+        <label class="field"><span>브라우저 탭 제목</span><input data-bind="seo.title"></label>
+        <label class="field"><span>검색 설명 <em>네이버·구글 검색 결과 아래에 나오는 문장</em></span><textarea rows="3" data-bind="seo.description"></textarea></label>
+      </div>
+      <p class="hint" id="backup-info"></p>
+    </section>
+  </main>
+
+  <!-- 실적 편집 창 -->
+  <dialog class="sheet" id="p-dialog">
+    <form method="dialog" id="p-form">
+      <h2 id="p-dialog-title">실적 수정</h2>
+      <div class="grid-2">
+        <label class="field"><span>연도 <em>완료 연도</em></span><input name="year" inputmode="numeric" maxlength="4" pattern="\d{4}" required></label>
+        <label class="field"><span>분류</span><input name="category" list="cat-list" required></label>
+        <label class="field span-2"><span>사업명</span><input name="name" required placeholder="예: 당진시 송악읍 중흥리 공장 신축"></label>
+        <label class="field"><span>규모 <em>m2라고 써도 ㎡로 바뀜</em></span><input name="scale" placeholder="예: 2,000m2 이하"></label>
+        <label class="field"><span>용량 <em>태양광</em></span><input name="capacity" placeholder="예: 100kW"></label>
+        <label class="field span-2"><span>용도지역</span><input name="zone" placeholder="예: 계획관리지역"></label>
+        <label class="field span-2"><span>관련 업무 <em>쉼표로 구분</em></span><input name="work" placeholder="예: 개발행위, 농지전용허가"></label>
+      </div>
+      <datalist id="cat-list"></datalist>
+      <p class="form-error" id="p-error" hidden></p>
+      <div class="sheet-actions">
+        <button type="button" class="btn btn-danger-quiet" id="p-delete">삭제</button>
+        <span class="spacer"></span>
+        <button type="button" class="btn btn-quiet" id="p-cancel">취소</button>
+        <button type="submit" class="btn btn-primary" value="ok">확인</button>
+      </div>
+    </form>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="admin.js"></script>
+</body>
+</html>
