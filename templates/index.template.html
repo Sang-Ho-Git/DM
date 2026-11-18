@@ -41,8 +41,8 @@
       </button>
       <nav class="site-nav" id="site-nav">
         <a href="#services">업무 안내</a>
-        <a href="#projects">인허가 실적</a>
         <a href="#process">진행 절차</a>
+        <a href="#projects">인허가 실적</a>
         <a href="#contact">오시는 길</a>
         <a class="nav-call" href="{{@telHref}}"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>{{company.tel}}</a>
       </nav>
@@ -129,7 +129,18 @@
       </div>
     </section>
 
-    <section class="section section-alt" id="projects">
+    <section class="section section-alt" id="process">
+      <div class="container">
+        <div class="section-head">
+          <h2>진행 절차</h2>
+        </div>
+        <ol class="steps">
+{{@steps}}
+        </ol>
+      </div>
+    </section>
+
+    <section class="section" id="projects">
       <div class="container">
         <div class="section-head">
           <h2>인허가 실적</h2>
@@ -143,17 +154,6 @@
           <p class="empty" id="empty" hidden>조건에 맞는 실적이 없습니다</p>
         </div>
         <nav class="pager" id="pager" aria-label="실적 페이지" hidden></nav>
-      </div>
-    </section>
-
-    <section class="section" id="process">
-      <div class="container">
-        <div class="section-head">
-          <h2>진행 절차</h2>
-        </div>
-        <ol class="steps">
-{{@steps}}
-        </ol>
       </div>
     </section>
 
