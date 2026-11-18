@@ -34,6 +34,12 @@
 
   // 같은 연도·같은 분류의 실적은 하나로 묶어, 대표 실적 1개만 보여 주고 "외 다수"로 표시
   const cnt = (p) => Number(p.count) || 1;
+  // "12,000㎡ 이하" → 12000, "2MW" → 2000 (kW 기준)
+  const area = (s) => Number((String(s || '').match(/[\d,.]+/) || ['0'])[0].replace(/,/g, '')) || 0;
+  const power = (s) => {
+    const m = String(s || '').match(/([\d.]+)\s*(mw|kw)/i);
+    return m ? Number(m[1]) * (m[2].toLowerCase() === 'mw' ? 1000 : 1) : 0;
+  };
   const groups = [];
   const byKey = new Map();
   data.forEach((p, i) => {
@@ -48,19 +54,25 @@
     const singles = g.items.filter((p) => cnt(p) === 1);
     g.rep = (singles.length ? singles : g.items)[(singles.length ? singles : g.items).length - 1];
     g.more = g.items.reduce((s, p) => s + cnt(p), 0) > 1;
+    // 면적·용도지역: 면적이 가장 큰 현장 것 / 용량: 가장 큰 값
+    const withArea = g.items.filter((p) => area(p.scale) > 0);
+    const big = withArea.length ? withArea.reduce((a, b) => (area(b.scale) > area(a.scale) ? b : a)) : g.rep;
+    const caps = g.items.filter((p) => power(p.capacity) > 0);
+    g.scale = big.scale || '';
+    g.zone = big.zone || (g.items.find((p) => p.zone) || {}).zone || '';
+    g.capacity = caps.length ? caps.reduce((a, b) => (power(b.capacity) > power(a.capacity) ? b : a)).capacity : (g.rep.capacity || '');
+    // 허가 내용: 모든 현장 것을 합치고 중복은 한 번만
+    g.works = [...new Set(g.items.flatMap((p) => String(p.work || '').split(',').map((w) => w.trim()).filter(Boolean)))];
   });
 
   const years = [...new Set(data.map((p) => p.year))].sort();
-  const catSize = data.reduce((m, p) => (m[p.category] = (m[p.category] || 0) + cnt(p), m), {});
-  if (years.length) $('#projects-lead').textContent = `${years[0]}~${years[years.length - 1]}년에 진행한 주요 실적을 분류와 연도로 골라 볼 수 있습니다`;
+  if (years.length) $('#projects-lead').textContent = `${years[0]}~${years[years.length - 1]}년에 진행한 주요 실적을 연도별로 볼 수 있습니다`;
 
-  // 필터 (분류는 실적이 많은 순서로 놓되, 숫자는 보여 주지 않음)
-  const state = { cat: '전체', year: '전체' };
-  const catOrder = ['전체', ...Object.keys(catSize).sort((a, b) => catSize[b] - catSize[a])];
+  // 필터: 연도만
+  const state = { year: '전체' };
   const chip = (group, value) =>
     `<button type="button" class="chip" data-group="${group}" data-value="${esc(value)}" aria-pressed="${state[group] === value}">${esc(value)}</button>`;
   function renderChips() {
-    $('#cat-chips').innerHTML = catOrder.map((c) => chip('cat', c)).join('');
     $('#year-chips').innerHTML = ['전체', ...years.slice().reverse()].map((y) => chip('year', y)).join('');
   }
   document.addEventListener('click', (e) => {
@@ -76,8 +88,8 @@
     const p = g.rep;
     const base = p.name.replace(/\s*외\s*\d+\s*건\s*$/, '');
     const name = g.more ? `${base} 외 다수` : base;
-    const meta = [p.capacity, p.scale, p.zone].filter(Boolean).join(' · ');
-    const works = p.work.split(',').map((w) => w.trim()).filter(Boolean).join(' · ');
+    const meta = [g.capacity, g.scale, g.zone].filter(Boolean).join(' · ');
+    const works = g.works.join(' · ');
     return `<article class="project">
       <div class="project-top"><span class="tag">${esc(g.category)}</span><span class="year">${esc(g.year)}년</span></div>
       <h3 title="${esc(name)}">${esc(name)}</h3>
@@ -98,7 +110,6 @@
 
   function filtered() {
     return groups
-      .filter((g) => state.cat === '전체' || g.category === state.cat)
       .filter((g) => state.year === '전체' || g.year === state.year)
       // 연도 최신순, 같은 연도 안에서는 나중에 추가한 실적이 있는 묶음이 먼저
       .sort((a, b) => b.year.localeCompare(a.year) || b.last - a.last);
