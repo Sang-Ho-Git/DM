@@ -228,6 +228,7 @@ h1, h2, h3 { margin: 0; line-height: 1.3; }
 .site-footer { padding: 32px 0; background: #11201a; color: #8f9a92; font-size: 14px; }
 .site-footer p { margin: 4px 0; font-variant-numeric: tabular-nums; }
 .footer-name { color: var(--on-dark); }
+.site-footer .nw { white-space: nowrap; }
 .footer-logo { display: block; height: 32px; width: auto; margin-bottom: 12px; }
 
 .float-call { display: none; }

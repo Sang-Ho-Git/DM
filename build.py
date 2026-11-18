@@ -63,12 +63,13 @@ def blocks(site):
         rows.append(('이메일', f'<a href="mailto:{esc(c["email"])}">{esc(c["email"])}</a>'))
     contact_list = '\n'.join(f'            <div><dt>{k}</dt><dd>{v}</dd></div>' for k, v in rows if v)
     tips = '\n'.join(f'            <li>{point}<span>{esc(t)}</span></li>' for t in site['contact']['tips'] if t)
-    line1 = [f'<span class="footer-name">{esc(c.get("name"))}</span>']
+    # 항목마다 <span class="nw">로 묶어 "F."와 번호 사이처럼 항목 중간에서 줄이 바뀌지 않게 함
+    line1 = [f'<span class="footer-name nw">{esc(c.get("name"))}</span>']
     if c.get('ceo'):
-        line1.append(f'대표 {esc(c["ceo"])}')
+        line1.append(f'<span class="nw">대표 {esc(c["ceo"])}</span>')
     full_addr = ' '.join(x for x in [f'({c["zip"]})' if c.get('zip') else '', c.get('address', ''), c.get('addressDetail', '')] if x)
     line1.append(esc(full_addr))
-    line2 = [f'{k}. {esc(c[f])}' for k, f in [('T', 'tel'), ('M', 'mobile'), ('F', 'fax'), ('E', 'email')] if c.get(f)]
+    line2 = [f'<span class="nw">{k}. {esc(c[f])}</span>' for k, f in [('T', 'tel'), ('M', 'mobile'), ('F', 'fax'), ('E', 'email')] if c.get(f)]
     footer = (f'<p>{" · ".join(line1)}</p>\n      <p>{" · ".join(line2)}</p>\n'
               f'      <p class="copy">© {esc(c.get("name"))}</p>')
     return {

@@ -8,6 +8,7 @@
 - 이 컴퓨터(127.0.0.1)에서만 접속할 수 있습니다.
 - 저장하면 data/*.json 을 고치고, 이전 내용은 data/backup/ 에 남긴 뒤 build.py로 index.html을 다시 만듭니다.
 """
+import importlib
 import json
 import shutil
 import sys
@@ -167,6 +168,7 @@ class Handler(SimpleHTTPRequestHandler):
         write_json(DATA / 'site.json', site)
         write_json(DATA / 'projects.json', projects)
         try:
+            importlib.reload(build)  # build.py가 바뀌었어도 서버를 다시 켤 필요 없게
             result = build.build()
         except Exception as e:  # 빌드 실패 시 원래대로 되돌림
             for f in ('site.json', 'projects.json'):
