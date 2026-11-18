@@ -32,29 +32,36 @@
     }
   });
 
-  // 실적 요약 숫자: "외 22건"처럼 여러 건을 묶은 항목은 건수(count)만큼 셈
+  // 같은 연도·같은 분류의 실적은 하나로 묶어, 대표 실적 1개만 보여 주고 "외 다수"로 표시
   const cnt = (p) => Number(p.count) || 1;
-  const sumCount = (arr) => arr.reduce((s, p) => s + cnt(p), 0);
-  const count = (key) => data.reduce((m, p) => (m[p[key]] = (m[p[key]] || 0) + cnt(p), m), {});
-  const cats = count('category');
-  const years = Object.keys(count('year')).sort();
-  const total = sumCount(data);
-  $('#hero-stats').innerHTML = [
-    [total + '건', '주요 인허가 실적'],
-    [Object.keys(cats).length + '개', '시설 분야'],
-    [(cats['태양광발전시설'] || 0) + '건', '태양광발전시설'],
-    [years[0] + '~' + years[years.length - 1], '실적 연도'],
-  ].map(([b, s]) => `<li><b>${b}</b><span>${s}</span></li>`).join('');
-  $('#projects-lead').textContent = `${years[0]}~${years[years.length - 1]}년에 진행한 주요 실적을 분류와 연도로 골라 볼 수 있습니다`;
+  const groups = [];
+  const byKey = new Map();
+  data.forEach((p, i) => {
+    const key = p.year + '|' + p.category;
+    if (!byKey.has(key)) { byKey.set(key, { year: p.year, category: p.category, items: [], last: i }); groups.push(byKey.get(key)); }
+    const g = byKey.get(key);
+    g.items.push(p);
+    g.last = i;
+  });
+  groups.forEach((g) => {
+    // 대표: 한 건짜리 중 나중에 추가한 것(정보가 더 자세함), 없으면 마지막 항목
+    const singles = g.items.filter((p) => cnt(p) === 1);
+    g.rep = (singles.length ? singles : g.items)[(singles.length ? singles : g.items).length - 1];
+    g.more = g.items.reduce((s, p) => s + cnt(p), 0) > 1;
+  });
 
-  // 필터
-  const state = { cat: '전체', year: '전체', q: '' };
-  const catOrder = ['전체', ...Object.keys(cats).sort((a, b) => cats[b] - cats[a])];
-  const chip = (group, value, n) =>
-    `<button type="button" class="chip" data-group="${group}" data-value="${esc(value)}" aria-pressed="${state[group] === value}">${esc(value)}${n != null ? `<span class="n">${n}</span>` : ''}</button>`;
+  const years = [...new Set(data.map((p) => p.year))].sort();
+  const catSize = data.reduce((m, p) => (m[p.category] = (m[p.category] || 0) + cnt(p), m), {});
+  if (years.length) $('#projects-lead').textContent = `${years[0]}~${years[years.length - 1]}년에 진행한 주요 실적을 분류와 연도로 골라 볼 수 있습니다`;
+
+  // 필터 (분류는 실적이 많은 순서로 놓되, 숫자는 보여 주지 않음)
+  const state = { cat: '전체', year: '전체' };
+  const catOrder = ['전체', ...Object.keys(catSize).sort((a, b) => catSize[b] - catSize[a])];
+  const chip = (group, value) =>
+    `<button type="button" class="chip" data-group="${group}" data-value="${esc(value)}" aria-pressed="${state[group] === value}">${esc(value)}</button>`;
   function renderChips() {
-    $('#cat-chips').innerHTML = catOrder.map((c) => chip('cat', c, c === '전체' ? total : cats[c])).join('');
-    $('#year-chips').innerHTML = ['전체', ...years.slice().reverse()].map((y) => chip('year', y, null)).join('');
+    $('#cat-chips').innerHTML = catOrder.map((c) => chip('cat', c)).join('');
+    $('#year-chips').innerHTML = ['전체', ...years.slice().reverse()].map((y) => chip('year', y)).join('');
   }
   document.addEventListener('click', (e) => {
     const b = e.target.closest('.chip');
@@ -63,16 +70,17 @@
     renderChips();
     renderList();
   });
-  $('#search').addEventListener('input', (e) => { state.q = e.target.value.trim(); renderList(); });
 
-
-  function card(p) {
+  function card(g) {
     // 카드 높이를 모두 같게: 제목 2줄, 규모·용도지역 1줄, 업무 1줄 (넘치면 … 처리, 전체 내용은 title로)
-    const meta = [cnt(p) > 1 ? `총 ${cnt(p)}건` : '', p.capacity, p.scale, p.zone].filter(Boolean).join(' · ');
+    const p = g.rep;
+    const base = p.name.replace(/\s*외\s*\d+\s*건\s*$/, '');
+    const name = g.more ? `${base} 외 다수` : base;
+    const meta = [p.capacity, p.scale, p.zone].filter(Boolean).join(' · ');
     const works = p.work.split(',').map((w) => w.trim()).filter(Boolean).join(' · ');
     return `<article class="project">
-      <div class="project-top"><span class="tag">${esc(p.category)}</span><span class="year">${esc(p.year)}년</span></div>
-      <h3 title="${esc(p.name)}">${esc(p.name)}</h3>
+      <div class="project-top"><span class="tag">${esc(g.category)}</span><span class="year">${esc(g.year)}년</span></div>
+      <h3 title="${esc(name)}">${esc(name)}</h3>
       <p class="meta" title="${esc(meta)}">${esc(meta)}</p>
       <p class="works" title="${esc(works)}">${esc(works)}</p>
     </article>`;
@@ -89,13 +97,11 @@
   let current = 0;
 
   function filtered() {
-    const q = state.q.replace(/\s+/g, '');
-    return data
-      .filter((p) => state.cat === '전체' || p.category === state.cat)
-      .filter((p) => state.year === '전체' || p.year === state.year)
-      .filter((p) => !q || (p.name + p.zone + p.work + p.category).replace(/\s+/g, '').includes(q))
-      // 연도 최신순, 같은 연도 안에서는 데이터 파일 뒤쪽(더 최근에 진행한 것)이 먼저
-      .sort((a, b) => b.year.localeCompare(a.year) || data.indexOf(b) - data.indexOf(a));
+    return groups
+      .filter((g) => state.cat === '전체' || g.category === state.cat)
+      .filter((g) => state.year === '전체' || g.year === state.year)
+      // 연도 최신순, 같은 연도 안에서는 나중에 추가한 실적이 있는 묶음이 먼저
+      .sort((a, b) => b.year.localeCompare(a.year) || b.last - a.last);
   }
 
   function renderList(keepIndex) {
@@ -121,7 +127,7 @@
     const probe = document.createElement('div');
     probe.className = 'project-page';
     probe.style.cssText = 'position:absolute;left:0;top:0;width:100%;visibility:hidden;pointer-events:none';
-    probe.innerHTML = data.slice(0, size).map(card).join('');
+    probe.innerHTML = groups.slice(0, size).map(card).join('');
     wrap.appendChild(probe);
     wrap.style.minHeight = Math.ceil(probe.getBoundingClientRect().height) + 'px';
     probe.remove();
@@ -146,12 +152,6 @@
   }
 
   function updatePager() {
-    const from = list.length ? current * size + 1 : 0;
-    const to = Math.min(list.length, (current + 1) * size);
-    // 묶음 항목이 있으면 "134건 (77개 항목) 중 1–9", 없으면 "12건 중 1–9"
-    const sum = sumCount(list);
-    const head = sum === list.length ? `${sum}건` : `${sum}건 (${list.length}개 항목)`;
-    $('#result-count').textContent = list.length ? `${head} 중 ${from}–${to}` : '0건';
     // 페이지가 하나뿐이어도 번호 줄 자리는 남겨 둠 (아래 내용이 올라오지 않게)
     pager.classList.toggle('is-idle', pages <= 1);
     pager.hidden = false;
