@@ -30,6 +30,9 @@
 
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; scroll-padding-top: 64px; }
+/* 혹시 다른 요소가 넘쳐도 화면 옆이 보이지 않게 한 번 더 막음 */
+html, body { overflow-x: hidden; }
+@supports (overflow: clip) { html, body { overflow-x: clip; } }
 body {
   margin: 0;
   font-family: "Pretendard Variable", Pretendard, "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
@@ -75,23 +78,22 @@ h1, h2, h3 { margin: 0; line-height: 1.3; }
 
 /* 첫 화면 */
 .hero { background: var(--green-dark); color: var(--on-dark); padding: 96px 0 48px; }
-.hero-inner { display: grid; grid-template-columns: 1fr 1.05fr; gap: 64px; align-items: center; }
+/* 그림 쪽을 넓게: 첫 화면만 폭을 1240까지 쓰고 그림 칸을 1.2배로 */
+.hero-inner { display: grid; grid-template-columns: 1fr 1.2fr; gap: 56px; align-items: center; max-width: 1240px; }
 .hero-place { display: flex; align-items: center; gap: 8px; margin: 0 0 20px; font-size: 15px; color: var(--gold-light); }
 .hero-place .ic { width: 16px; height: 16px; }
 .hero h1 { font-size: clamp(36px, 4.6vw, 52px); font-weight: 600; line-height: 1.18; letter-spacing: -.02em; color: #fff; }
 .hero-lead { margin: 24px 0 32px; max-width: 36rem; font-size: 18px; line-height: 1.6; color: var(--on-dark-2); }
 .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; }
 
-.plan { margin: 0; border-radius: 16px; overflow: hidden; background: #fbfaf6; box-shadow: 0 8px 24px rgba(0, 0, 0, .18); }
+.plan { margin: 0; border-radius: 16px; overflow: hidden; background: #8a8a62; box-shadow: 0 8px 24px rgba(0, 0, 0, .25); }
 .plan svg { display: block; width: 100%; height: auto; }
-.pl-title { font: 600 18px "Pretendard Variable", Pretendard, sans-serif; fill: var(--green-dark); }
-.pl-sub { font: 400 13px "Pretendard Variable", Pretendard, sans-serif; fill: #5e554a; }
-.pl-road { font: 400 12px "Pretendard Variable", Pretendard, sans-serif; fill: #7b7266; }
-.pl-pt { font: 500 12px ui-monospace, Consolas, monospace; fill: #b03a2e; }
-.pl-n { font: 500 12px ui-monospace, Consolas, monospace; fill: #5e554a; }
-.pl-tb { font: 600 12px "Pretendard Variable", Pretendard, sans-serif; fill: var(--green-dark); }
-.pl-tb2 { font: 400 11px ui-monospace, Consolas, monospace; fill: #5e554a; }
-.pl-tb-mark { font: 600 14px "Pretendard Variable", Pretendard, serif; fill: var(--green); }
+/* 항공사진 위에 겹친 글씨: 흰 글씨 + 어두운 이름표 */
+.pl-chip { font: 600 46px "Pretendard Variable", Pretendard, sans-serif; fill: #fff; }
+.pl-chip-sub { font: 400 30px "Pretendard Variable", Pretendard, sans-serif; fill: #d9e2d6; }
+.pl-pt { font: 600 32px ui-monospace, Consolas, monospace; fill: #fff; paint-order: stroke; stroke: rgba(10, 14, 10, .75); stroke-width: 7px; }
+.pl-n { font: 600 20px "Pretendard Variable", Pretendard, sans-serif; fill: #fff; }
+.pl-drone { font: 600 40px "Pretendard Variable", Pretendard, sans-serif; fill: #ffd34d; }
 
 .hero-stats { list-style: none; padding: 32px 0 0; margin: 64px 0 0; display: grid; grid-template-columns: repeat(4, 1fr); gap: 24px; border-top: 1px solid var(--line-dark); }
 .hero-stats b { display: block; font-size: 28px; font-weight: 500; line-height: 1.2; color: #fff; font-variant-numeric: tabular-nums; }
@@ -127,9 +129,10 @@ h1, h2, h3 { margin: 0; line-height: 1.3; }
 .service-more { margin: 24px 0 0; font-size: 15px; color: var(--ink-2); }
 
 /* 실적 */
-.filters { display: grid; gap: 12px; margin-bottom: 20px; }
-.filter-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; }
-.chip-row { display: flex; flex-wrap: wrap; gap: 8px; }
+/* min-width: 0 — 버튼 줄이 길어도 틀이 화면 밖으로 늘어나지 않게 (휴대폰 가로 넘침 방지) */
+.filters { display: grid; grid-template-columns: minmax(0, 1fr); gap: 12px; margin-bottom: 20px; }
+.filter-row { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px; min-width: 0; }
+.chip-row { display: flex; flex-wrap: wrap; gap: 8px; min-width: 0; max-width: 100%; }
 .chip {
   height: 36px; padding: 0 14px; border-radius: 8px;
   border: 1px solid var(--line); background: var(--card); color: var(--ink-2);
@@ -257,7 +260,7 @@ h1, h2, h3 { margin: 0; line-height: 1.3; }
   .hero h1 { font-size: 36px; }
   .hero-lead { font-size: 17px; }
   /* 도면이 작아지면 11px보다 작아지는 글씨는 숨김 */
-  .plan .pl-pt, .plan .pl-road, .plan .pl-n, .plan .pl-tbg { display: none; }
+  .plan .pl-pt { display: none; }
   .hero-stats { grid-template-columns: repeat(2, 1fr); gap: 20px 16px; margin-top: 40px; padding-top: 24px; }
   .hero-stats b { font-size: 24px; }
   .section { padding: 56px 0; }
@@ -286,6 +289,7 @@ h1, h2, h3 { margin: 0; line-height: 1.3; }
   .step-no { grid-row: span 2; margin: 3px 0 0; }
   .steps h3 { margin-bottom: 4px; }
   .search, .search input { width: 100%; }
+  .filter-row { flex-direction: column; align-items: stretch; }
   .chip-row { flex-wrap: nowrap; overflow-x: auto; padding-bottom: 4px; scrollbar-width: none; }
   .chip-row::-webkit-scrollbar { display: none; }
   .chip { flex: 0 0 auto; }

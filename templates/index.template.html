@@ -44,7 +44,7 @@
         <a href="#projects">인허가 실적</a>
         <a href="#process">진행 절차</a>
         <a href="#contact">오시는 길</a>
-        <a class="nav-call" href="tel:{{company.tel}}"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>{{company.tel}}</a>
+        <a class="nav-call" href="{{@telHref}}"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>{{company.tel}}</a>
       </nav>
     </div>
   </header>
@@ -57,55 +57,60 @@
           <h1>{{@heroTitle}}</h1>
           <p class="hero-lead">{{hero.lead}}</p>
           <div class="hero-actions">
-            <a class="btn btn-primary" href="tel:{{company.tel}}"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>전화 상담</a>
+            <a class="btn btn-primary" href="{{@telHref}}"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>전화 상담</a>
             <a class="btn btn-ghost" href="#projects">실적 보기</a>
           </div>
         </div>
 
         <!-- 첫 화면의 포인트: 측량 도면 한 장 -->
-        <figure class="plan" aria-label="현황측량도 예시 그림">
-          <svg viewBox="0 0 480 360" role="img" aria-hidden="true">
+        <figure class="plan" aria-label="논 가운데 들어선 태양광발전시설 부지 항공사진과 측량 경계 표시">
+          <svg viewBox="0 0 1376 768" role="img" aria-hidden="true">
             <defs>
-              <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M24 0H0V24" fill="none" stroke="#2e5a45" stroke-opacity=".07" stroke-width="1"/></pattern>
-              <pattern id="hatch" width="8" height="8" patternUnits="userSpaceOnUse" patternTransform="rotate(45)"><path d="M0 0V8" stroke="#2e5a45" stroke-opacity=".28" stroke-width="1.2"/></pattern>
-              <g id="pt"><circle r="6" fill="#fbfaf6" stroke="#b03a2e" stroke-width="1.4"/><path d="M-9 0H9M0-9V9" stroke="#b03a2e" stroke-width="1.2"/></g>
-              <marker id="arr" viewBox="0 0 8 8" refX="4" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 1 7 4 0 7" fill="none" stroke="#5e554a" stroke-width="1.1"/></marker>
+              <filter id="soft" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="7"/></filter>
+              <filter id="chipShadow" x="-20%" y="-30%" width="140%" height="190%"><feDropShadow dx="0" dy="4" stdDeviation="5" flood-opacity=".45"/></filter>
+              <radialGradient id="rotor" r=".5"><stop offset="0" stop-color="#e9eef2" stop-opacity=".15"/><stop offset=".75" stop-color="#e9eef2" stop-opacity=".5"/><stop offset="1" stop-color="#e9eef2" stop-opacity=".08"/></radialGradient>
+              <linearGradient id="droneBody" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#6a6f74"/><stop offset=".5" stop-color="#3a3e43"/><stop offset="1" stop-color="#22252a"/></linearGradient>
+              <g id="pt"><circle r="13" fill="none" stroke="#fff" stroke-width="6"/><circle r="13" fill="none" stroke="#e5392c" stroke-width="3.5"/><path d="M-22 0H22M0-22V22" stroke="#e5392c" stroke-width="3"/></g>
             </defs>
-            <rect width="480" height="360" fill="#fbfaf6"/>
-            <rect width="480" height="360" fill="url(#grid)"/>
-            <!-- 도로 -->
-            <path d="M0 292 C120 280 300 300 480 276 L480 316 C300 340 120 320 0 332Z" fill="#ece7dc"/>
-            <text x="404" y="306" class="pl-road">도로</text>
-            <!-- 이웃 필지 -->
-            <g fill="none" stroke="#5e554a" stroke-opacity=".45" stroke-width="1">
-              <path d="M0 64 L96 52 L118 176 L104 284"/>
-              <path d="M96 52 L210 34"/>
-              <path d="M372 42 L480 30"/>
-              <path d="M392 168 L480 160"/>
-              <path d="M386 278 L392 168 L372 42"/>
-              <path d="M0 176 L118 176"/>
+
+            <!-- Gemini로 만든 태양광 부지 항공사진 (워터마크 제거) -->
+            <image href="img/hero-aerial.webp" x="0" y="0" width="1376" height="768" preserveAspectRatio="xMidYMid slice"/>
+
+            <!-- 측량 표시: 부지 경계선·측점 (울타리 모서리) -->
+            <path d="M260 415L885 236L1120 440L935 680Z" fill="#ffd34d" fill-opacity=".07" stroke="#11140f" stroke-opacity=".45" stroke-width="10" stroke-linejoin="round"/>
+            <path d="M260 415L885 236L1120 440L935 680Z" fill="none" stroke="#ffd34d" stroke-width="4.5" stroke-linejoin="round"/>
+            <use href="#pt" x="260" y="415"/><use href="#pt" x="885" y="236"/><use href="#pt" x="1120" y="440"/><use href="#pt" x="935" y="680"/>
+            <g class="pl-pt-g">
+              <text x="214" y="400" class="pl-pt">P1</text><text x="868" y="212" class="pl-pt">P2</text>
+              <text x="1138" y="488" class="pl-pt">P3</text><text x="958" y="710" class="pl-pt">P4</text>
             </g>
-            <!-- 사업 부지 -->
-            <path d="M136 72 L352 52 L366 262 L150 278 Z" fill="url(#hatch)" stroke="#2e5a45" stroke-width="2.2" stroke-linejoin="round"/>
-            <text x="252" y="160" text-anchor="middle" class="pl-title">사업 부지</text>
-            <text x="252" y="182" text-anchor="middle" class="pl-sub">계획관리지역</text>
-            <!-- 치수선 -->
-            <path d="M136 46 L352 26" stroke="#5e554a" stroke-width="1" marker-start="url(#arr)" marker-end="url(#arr)"/>
-            <path d="M136 66 V40 M352 46 V20" stroke="#5e554a" stroke-opacity=".5" stroke-width="1"/>
-            <path d="M380 54 L394 260" stroke="#5e554a" stroke-width="1" marker-start="url(#arr)" marker-end="url(#arr)"/>
-            <!-- 측점 -->
-            <use href="#pt" x="136" y="72"/><use href="#pt" x="352" y="52"/><use href="#pt" x="366" y="262"/><use href="#pt" x="150" y="278"/>
-            <text x="118" y="94" class="pl-pt">P1</text><text x="330" y="80" class="pl-pt">P2</text><text x="338" y="250" class="pl-pt">P3</text><text x="160" y="262" class="pl-pt">P4</text>
-            <!-- 방위표 -->
-            <g transform="translate(44 116)" stroke="#5e554a" fill="none" stroke-width="1"><path d="M0 18 L0 -18"/><path d="M-6 -8 L0 -20 L6 -8"/><text x="-4" y="-26" class="pl-n" stroke="none">N</text></g>
-            <!-- 표제란 -->
-            <g class="pl-tbg" transform="translate(300 316)">
-              <rect width="172" height="36" fill="#fbfaf6" stroke="#2e5a45" stroke-width="1"/>
-              <path d="M112 0V36" stroke="#2e5a45" stroke-width="1"/>
-              <text x="10" y="15" class="pl-tb">현황측량도</text>
-              <text x="10" y="29" class="pl-tb2">축척 1:600</text>
-              <text x="142" y="23" text-anchor="middle" class="pl-tb-mark">東明</text>
+
+            <!-- 이름표 -->
+            <g filter="url(#chipShadow)"><rect x="668" y="420" width="236" height="110" rx="18" fill="#13201a" fill-opacity=".84"/></g>
+            <text x="786" y="471" text-anchor="middle" class="pl-chip">태양광 부지</text>
+            <text x="786" y="510" text-anchor="middle" class="pl-chip-sub">계획관리지역</text>
+
+            <!-- 드론: 아래 논에 비친 그림자 + 기체 + 촬영 비행 경로 -->
+            <path d="M1196 300C1150 330 1120 360 1080 392" fill="none" stroke="#fff" stroke-opacity=".9" stroke-width="4" stroke-dasharray="12 12" stroke-linecap="round"/>
+            <g transform="translate(1290 330) rotate(-12) scale(2.9) skewX(-18)" filter="url(#soft)" opacity=".45">
+              <path d="M-15-15L15 15M15-15L-15 15" stroke="#0c120a" stroke-width="5" stroke-linecap="round"/>
+              <circle cx="-16" cy="-16" r="10" fill="#0c120a" fill-opacity=".5"/><circle cx="16" cy="-16" r="10" fill="#0c120a" fill-opacity=".5"/>
+              <circle cx="-16" cy="16" r="10" fill="#0c120a" fill-opacity=".5"/><circle cx="16" cy="16" r="10" fill="#0c120a" fill-opacity=".5"/>
             </g>
+            <g class="drone" transform="translate(1250 262) rotate(-12) scale(3.1)">
+              <g stroke="#2b2f34" stroke-width="3.4" stroke-linecap="round"><path d="M-15-15L15 15"/><path d="M15-15L-15 15"/></g>
+              <g stroke="#7d848b" stroke-width="1" stroke-linecap="round" opacity=".8"><path d="M-14-16L14 12"/><path d="M14-16L-14 12"/></g>
+              <g fill="#1d2024"><circle cx="-16" cy="-16" r="3.2"/><circle cx="16" cy="-16" r="3.2"/><circle cx="-16" cy="16" r="3.2"/><circle cx="16" cy="16" r="3.2"/></g>
+              <g fill="url(#rotor)" stroke="#f3f6f8" stroke-opacity=".5" stroke-width=".6">
+                <circle cx="-16" cy="-16" r="11"/><circle cx="16" cy="-16" r="11"/><circle cx="-16" cy="16" r="11"/><circle cx="16" cy="16" r="11"/>
+              </g>
+              <rect x="-9" y="-11" width="18" height="22" rx="6" fill="url(#droneBody)" stroke="#16181b" stroke-width=".8"/>
+              <rect x="-6" y="-9" width="12" height="5" rx="2" fill="#9aa1a8" fill-opacity=".45"/>
+              <circle cx="0" cy="8" r="3.2" fill="#15171a" stroke="#5b6168" stroke-width=".8"/><circle cx="-.8" cy="7.2" r="1" fill="#8fb3d9"/>
+              <circle cx="-16" cy="-23" r="1.3" fill="#ff4b3e"/><circle cx="16" cy="-23" r="1.3" fill="#3ee07a"/>
+            </g>
+            <g filter="url(#chipShadow)"><rect x="1150" y="372" width="200" height="66" rx="14" fill="#13201a" fill-opacity=".84"/></g>
+            <text x="1250" y="418" text-anchor="middle" class="pl-drone">드론측량</text>
           </svg>
         </figure>
       </div>
@@ -171,7 +176,7 @@
 {{@contactList}}
           </dl>
           <div class="contact-actions">
-            <a class="btn btn-primary" href="tel:{{company.tel}}"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>전화하기</a>
+            <a class="btn btn-primary" href="{{@telHref}}"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg>전화하기</a>
             <a class="btn btn-ghost" href="{{@mapUrl}}" target="_blank" rel="noopener">네이버 지도에서 보기</a>
           </div>
         </div>
@@ -192,7 +197,7 @@
     </div>
   </footer>
 
-  <a class="float-call" href="tel:{{company.tel}}" aria-label="전화 상담"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg></a>
+  <a class="float-call" href="{{@telHref}}" aria-label="전화 상담"><svg class="ic" aria-hidden="true"><use href="#i-phone"/></svg></a>
 
   <script src="js/projects.js?v={{@version}}"></script>
   <script src="js/main.js?v={{@version}}"></script>

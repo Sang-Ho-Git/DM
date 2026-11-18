@@ -153,11 +153,12 @@
     const year = $('#p-year').value;
     const rows = order().filter(({ p }) => (!cat || p.category === cat) && (!year || p.year === year)
       && (!q || (p.name + p.zone + p.work + p.category).replace(/\s+/g, '').includes(q)));
-    $('#p-count').textContent = `${rows.length}건 / 전체 ${projects.length}건`;
+    const sum = (arr) => arr.reduce((s, x) => s + (Number(x.count) || 1), 0);
+    $('#p-count').textContent = `${rows.length}개 항목 (${sum(rows.map((r) => r.p))}건) / 전체 ${projects.length}개 항목 (${sum(projects)}건)`;
     $('#p-rows').innerHTML = rows.length ? rows.map(({ p, idx }) => `<tr data-idx="${idx}" tabindex="0">
       <td class="c-year">${esc(p.year)}</td>
       <td class="cat">${esc(p.category)}</td>
-      <td>${esc(p.name)}</td>
+      <td>${esc(p.name)}${Number(p.count) > 1 ? ` <span class="badge">${Number(p.count)}건</span>` : ''}</td>
       <td class="meta">${esc([p.capacity, p.scale, p.zone].filter(Boolean).join(' · ')) || '—'}</td>
       <td class="c-act"><button type="button" class="btn btn-quiet btn-sm">수정</button></td>
     </tr>`).join('') : '<tr class="empty-row"><td colspan="5">조건에 맞는 실적이 없습니다</td></tr>';
@@ -179,9 +180,10 @@
   let confirmDelete = false;
   function openProject(idx) {
     editing = idx;
-    const p = idx >= 0 ? projects[idx] : { year: String(new Date().getFullYear()), category: '', name: '', scale: '', capacity: '', zone: '', work: '측량설계' };
+    const p = idx >= 0 ? projects[idx] : { year: String(new Date().getFullYear()), category: '', name: '', count: 1, scale: '', capacity: '', zone: '', work: '측량설계' };
     $('#p-dialog-title').textContent = idx >= 0 ? '실적 수정' : '실적 추가';
     ['year', 'category', 'name', 'scale', 'capacity', 'zone', 'work'].forEach((k) => { form.elements[k].value = p[k] || ''; });
+    form.elements.count.value = Number(p.count) || 1;
     $('#p-delete').hidden = idx < 0;
     resetDelete();
     $('#p-error').hidden = true;
@@ -202,8 +204,10 @@
   form.addEventListener('submit', (e) => {
     e.preventDefault();
     const v = Object.fromEntries(['year', 'category', 'name', 'scale', 'capacity', 'zone', 'work'].map((k) => [k, fixUnits(form.elements[k].value.trim())]));
+    v.count = Number(form.elements.count.value);
     const err = !/^\d{4}$/.test(v.year) ? '연도는 숫자 4자리로 적어 주세요 (예: 2026)'
-      : !v.category ? '분류를 적어 주세요' : !v.name ? '사업명을 적어 주세요' : '';
+      : !v.category ? '분류를 적어 주세요' : !v.name ? '사업명을 적어 주세요'
+      : !(Number.isInteger(v.count) && v.count >= 1 && v.count <= 999) ? '건수는 1~999 사이 숫자로 적어 주세요' : '';
     if (err) { $('#p-error').textContent = err; $('#p-error').hidden = false; return; }
     if (editing >= 0) Object.assign(projects[editing], v);
     else projects.push({ id: 0, ...v });

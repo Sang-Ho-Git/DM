@@ -72,7 +72,13 @@ def clean_projects(rows):
             raise ValueError(f'"{name}"의 연도는 숫자 4자리여야 합니다')
         if not cat:
             raise ValueError(f'"{name}"의 분류가 비어 있습니다')
-        out.append({'id': n, 'year': year, 'category': cat, 'name': name,
+        try:
+            count = int(str(p.get('count') or 1).strip())
+        except ValueError:
+            raise ValueError(f'"{name}"의 건수는 숫자로 적어 주세요')
+        if not 1 <= count <= 999:
+            raise ValueError(f'"{name}"의 건수는 1~999 사이여야 합니다')
+        out.append({'id': n, 'year': year, 'category': cat, 'name': name, 'count': count,
                     'scale': text(p.get('scale'), 100), 'capacity': text(p.get('capacity'), 40),
                     'zone': text(p.get('zone'), 100), 'work': text(p.get('work'), 200)})
     return out
@@ -175,9 +181,20 @@ class Handler(SimpleHTTPRequestHandler):
         sys.stderr.write('[%s] %s\n' % (time.strftime('%H:%M:%S'), fmt % args))
 
 
+class Server(ThreadingHTTPServer):
+    # 윈도우에서는 이 값이 True면 같은 포트에 서버가 겹쳐 떠서, 옛 코드 서버가 저장을 받아 버릴 수 있음
+    allow_reuse_address = sys.platform != 'win32'
+
+
 if __name__ == '__main__':
+    try:
+        httpd = Server((HOST, PORT), Handler)
+    except OSError:
+        print(f'{PORT}번 포트를 이미 다른 프로그램이 쓰고 있습니다.')
+        print('관리자_실행.bat 창이 이미 열려 있는지 확인하고, 열려 있으면 그 창을 쓰거나 닫은 뒤 다시 실행하세요.')
+        sys.exit(1)
     build.build()
-    print(f'사이트:   http://{HOST}:{PORT}/')
-    print(f'관리자:   http://{HOST}:{PORT}/admin/')
-    print('끄려면 이 창에서 Ctrl+C')
-    ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()
+    print(f'사이트:   http://{HOST}:{PORT}/', flush=True)
+    print(f'관리자:   http://{HOST}:{PORT}/admin/', flush=True)
+    print('끄려면 이 창을 닫거나 Ctrl+C', flush=True)
+    httpd.serve_forever()

@@ -18,12 +18,15 @@
     }
   });
 
-  // 실적 요약 숫자
-  const count = (key) => data.reduce((m, p) => (m[p[key]] = (m[p[key]] || 0) + 1, m), {});
+  // 실적 요약 숫자: "외 22건"처럼 여러 건을 묶은 항목은 건수(count)만큼 셈
+  const cnt = (p) => Number(p.count) || 1;
+  const sumCount = (arr) => arr.reduce((s, p) => s + cnt(p), 0);
+  const count = (key) => data.reduce((m, p) => (m[p[key]] = (m[p[key]] || 0) + cnt(p), m), {});
   const cats = count('category');
   const years = Object.keys(count('year')).sort();
+  const total = sumCount(data);
   $('#hero-stats').innerHTML = [
-    [data.length + '건', '주요 인허가 실적'],
+    [total + '건', '주요 인허가 실적'],
     [Object.keys(cats).length + '개', '시설 분야'],
     [(cats['태양광발전시설'] || 0) + '건', '태양광발전시설'],
     [years[0] + '~' + years[years.length - 1], '실적 연도'],
@@ -36,7 +39,7 @@
   const chip = (group, value, n) =>
     `<button type="button" class="chip" data-group="${group}" data-value="${esc(value)}" aria-pressed="${state[group] === value}">${esc(value)}${n != null ? `<span class="n">${n}</span>` : ''}</button>`;
   function renderChips() {
-    $('#cat-chips').innerHTML = catOrder.map((c) => chip('cat', c, c === '전체' ? data.length : cats[c])).join('');
+    $('#cat-chips').innerHTML = catOrder.map((c) => chip('cat', c, c === '전체' ? total : cats[c])).join('');
     $('#year-chips').innerHTML = ['전체', ...years.slice().reverse()].map((y) => chip('year', y, null)).join('');
   }
   document.addEventListener('click', (e) => {
@@ -51,7 +54,7 @@
 
   function card(p) {
     // 카드 높이를 모두 같게: 제목 2줄, 규모·용도지역 1줄, 업무 1줄 (넘치면 … 처리, 전체 내용은 title로)
-    const meta = [p.capacity, p.scale, p.zone].filter(Boolean).join(' · ');
+    const meta = [cnt(p) > 1 ? `총 ${cnt(p)}건` : '', p.capacity, p.scale, p.zone].filter(Boolean).join(' · ');
     const works = p.work.split(',').map((w) => w.trim()).filter(Boolean).join(' · ');
     return `<article class="project">
       <div class="project-top"><span class="tag">${esc(p.category)}</span><span class="year">${esc(p.year)}년</span></div>
@@ -131,7 +134,10 @@
   function updatePager() {
     const from = list.length ? current * size + 1 : 0;
     const to = Math.min(list.length, (current + 1) * size);
-    $('#result-count').textContent = list.length ? `${list.length}건 중 ${from}–${to}` : '0건';
+    // 묶음 항목이 있으면 "134건 (77개 항목) 중 1–9", 없으면 "12건 중 1–9"
+    const sum = sumCount(list);
+    const head = sum === list.length ? `${sum}건` : `${sum}건 (${list.length}개 항목)`;
+    $('#result-count').textContent = list.length ? `${head} 중 ${from}–${to}` : '0건';
     // 페이지가 하나뿐이어도 번호 줄 자리는 남겨 둠 (아래 내용이 올라오지 않게)
     pager.classList.toggle('is-idle', pages <= 1);
     pager.hidden = false;

@@ -7,7 +7,8 @@ window.PROJECTS = [
   "scale": "3,000㎡ 이하",
   "capacity": "",
   "zone": "농림지역(농업진흥구역)",
-  "work": "개발행위, 농지전용허가, 목적외사용승인, 창업계획승인"
+  "work": "개발행위, 농지전용허가, 목적외사용승인, 창업계획승인",
+  "count": 1
  },
  {
   "year": "2016",
@@ -16,7 +17,8 @@ window.PROJECTS = [
   "scale": "30,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위, 농지전용허가, 산지전용허가, 국유재산사용허가, 도로점용허가, 창업계획승인"
+  "work": "개발행위, 농지전용허가, 산지전용허가, 국유재산사용허가, 도로점용허가, 창업계획승인",
+  "count": 1
  },
  {
   "year": "2016",
@@ -25,7 +27,8 @@ window.PROJECTS = [
   "scale": "6,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위, 산지전용허가"
+  "work": "개발행위, 산지전용허가",
+  "count": 1
  },
  {
   "year": "2016",
@@ -34,7 +37,8 @@ window.PROJECTS = [
   "scale": "12,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "농지전용허가"
+  "work": "농지전용허가",
+  "count": 1
  },
  {
   "year": "2016",
@@ -43,7 +47,8 @@ window.PROJECTS = [
   "scale": "1,000㎡ 이하",
   "capacity": "",
   "zone": "생산관리지역",
-  "work": "개발행위, 농지전용허가"
+  "work": "개발행위, 농지전용허가",
+  "count": 1
  },
  {
   "year": "2016",
@@ -52,7 +57,8 @@ window.PROJECTS = [
   "scale": "22,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위"
+  "work": "개발행위",
+  "count": 1
  },
  {
   "year": "2016",
@@ -61,7 +67,8 @@ window.PROJECTS = [
   "scale": "18,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "산지전용허가"
+  "work": "산지전용허가",
+  "count": 1
  },
  {
   "year": "2016",
@@ -70,7 +77,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "개발행위, 농지전용허가, 산지전용허가"
+  "work": "개발행위, 농지전용허가, 산지전용허가",
+  "count": 8
  },
  {
   "year": "2016",
@@ -79,7 +87,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위, 산지전용허가"
+  "work": "개발행위, 산지전용허가",
+  "count": 1
  },
  {
   "year": "2016",
@@ -88,7 +97,8 @@ window.PROJECTS = [
   "scale": "8,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위허가"
+  "work": "개발행위허가",
+  "count": 1
  },
  {
   "year": "2017",
@@ -97,7 +107,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "개발행위, 농지전용허가, 산지전용허가, 도로점용허가, 국유재산사용허가"
+  "work": "개발행위, 농지전용허가, 산지전용허가, 도로점용허가, 국유재산사용허가",
+  "count": 23
  },
  {
   "year": "2017",
@@ -106,7 +117,8 @@ window.PROJECTS = [
   "scale": "1,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위, 농지전용허가"
+  "work": "개발행위, 농지전용허가",
+  "count": 1
  },
  {
   "year": "2017",
@@ -115,7 +127,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "계획관리지역, 농림지역, 생산관리지역",
-  "work": "산지전용허가, 목적외사용승인, 국유재산사용허가"
+  "work": "산지전용허가, 목적외사용승인, 국유재산사용허가",
+  "count": 7
  },
  {
   "year": "2017",
@@ -124,7 +137,8 @@ window.PROJECTS = [
   "scale": "80,000㎡ 이하",
   "capacity": "",
   "zone": "일반공업지역",
-  "work": "개발행위허가, 공작물축조신고"
+  "work": "개발행위허가, 공작물축조신고",
+  "count": 1
  },
  {
   "year": "2017",
@@ -133,7 +147,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "100kw 이하",
   "zone": "보전관리지역",
-  "work": "개발행위, 산지전용허가"
+  "work": "개발행위, 산지전용허가",
+  "count": 1
  },
  {
   "year": "2017",
@@ -142,7 +157,8 @@ window.PROJECTS = [
   "scale": "20,000㎡ 이하",
   "capacity": "2MW",
   "zone": "농림지역, 생산관리지역, 보전관리지역",
-  "work": "개발행위, 산지전용허가"
+  "work": "개발행위, 산지전용허가",
+  "count": 1
  },
  {
   "year": "2017",
@@ -151,7 +167,8 @@ window.PROJECTS = [
   "scale": "18,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위, 산지전용허가"
+  "work": "개발행위, 산지전용허가",
+  "count": 1
  },
  {
   "year": "2017",
@@ -160,7 +177,8 @@ window.PROJECTS = [
   "scale": "1,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위, 농지전용허가, 목적외사용승인"
+  "work": "개발행위, 농지전용허가, 목적외사용승인",
+  "count": 1
  },
  {
   "year": "2017",
@@ -169,7 +187,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "100kW",
   "zone": "계획관리지역",
-  "work": "개발행위, 농지전용허가"
+  "work": "개발행위, 농지전용허가",
+  "count": 1
  },
  {
   "year": "2017",
@@ -178,7 +197,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위, 농지전용허가"
+  "work": "개발행위, 농지전용허가",
+  "count": 1
  },
  {
   "year": "2017",
@@ -187,7 +207,8 @@ window.PROJECTS = [
   "scale": "1,000㎡ 이하",
   "capacity": "",
   "zone": "제2종일반주거지역",
-  "work": "개발행위, 농지전용허가"
+  "work": "개발행위, 농지전용허가",
+  "count": 1
  },
  {
   "year": "2017",
@@ -196,7 +217,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "200kW",
   "zone": "생산관리지역",
-  "work": "개발행위, 농지전용허가, 국유재산사용허가"
+  "work": "개발행위, 농지전용허가, 국유재산사용허가",
+  "count": 1
  },
  {
   "year": "2017",
@@ -205,7 +227,8 @@ window.PROJECTS = [
   "scale": "5,000㎡ 이하",
   "capacity": "",
   "zone": "공업지역",
-  "work": "개발행위허가"
+  "work": "개발행위허가",
+  "count": 1
  },
  {
   "year": "2017",
@@ -214,7 +237,8 @@ window.PROJECTS = [
   "scale": "1,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위, 농지전용허가"
+  "work": "개발행위, 농지전용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -223,7 +247,8 @@ window.PROJECTS = [
   "scale": "1,500㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위, 농지전용허가, 목적외사용승인"
+  "work": "개발행위, 농지전용허가, 목적외사용승인",
+  "count": 1
  },
  {
   "year": "2018",
@@ -232,7 +257,8 @@ window.PROJECTS = [
   "scale": "3,000㎡ 이하",
   "capacity": "",
   "zone": "생산관리지역",
-  "work": "산지전용허가, 개간허가"
+  "work": "산지전용허가, 개간허가",
+  "count": 1
  },
  {
   "year": "2017",
@@ -241,7 +267,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "개발행위, 농지전용허가, 산지전용허가, 도로점용허가, 국유재산사용허가"
+  "work": "개발행위, 농지전용허가, 산지전용허가, 도로점용허가, 국유재산사용허가",
+  "count": 11
  },
  {
   "year": "2018",
@@ -250,7 +277,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "계획관리지역, 농림지역, 생산관리지역",
-  "work": "산지전용허가, 목적외사용승인, 국유재산사용허가"
+  "work": "산지전용허가, 목적외사용승인, 국유재산사용허가",
+  "count": 5
  },
  {
   "year": "2018",
@@ -259,7 +287,8 @@ window.PROJECTS = [
   "scale": "8,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위, 농지전용허가, 도로점용허가, 국유재산사용허가"
+  "work": "개발행위, 농지전용허가, 도로점용허가, 국유재산사용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -268,7 +297,8 @@ window.PROJECTS = [
   "scale": "1,000㎡ 이하",
   "capacity": "",
   "zone": "생산관리지역",
-  "work": "개발행위, 산지전용허가"
+  "work": "개발행위, 산지전용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -277,7 +307,8 @@ window.PROJECTS = [
   "scale": "35,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역, 생산관리지역",
-  "work": "개발행위, 농지전용허가, 국유재산사용허가"
+  "work": "개발행위, 농지전용허가, 국유재산사용허가",
+  "count": 8
  },
  {
   "year": "2018",
@@ -286,7 +317,8 @@ window.PROJECTS = [
   "scale": "1,000㎡ 이하",
   "capacity": "",
   "zone": "생산관리지역",
-  "work": "개발행위, 농지전용허가, 국유재산사용허가"
+  "work": "개발행위, 농지전용허가, 국유재산사용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -295,7 +327,8 @@ window.PROJECTS = [
   "scale": "10,000㎡ 이하",
   "capacity": "1MW",
   "zone": "보전관리지역",
-  "work": "개발행위허가, 산지전용허가, 농지전용허가,도로점용허가"
+  "work": "개발행위허가, 산지전용허가, 농지전용허가,도로점용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -304,7 +337,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "200kW",
   "zone": "계획관리지역",
-  "work": "개발행위, 산지전용허가, 산지일시사용허가"
+  "work": "개발행위, 산지전용허가, 산지일시사용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -313,7 +347,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "200kW",
   "zone": "계획관리지역, 생산관리지역, 보전관리지역",
-  "work": "개발행위, 산지전용허가"
+  "work": "개발행위, 산지전용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -322,7 +357,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "100kW",
   "zone": "계획관리지역",
-  "work": "개발행위, 농지전용허가"
+  "work": "개발행위, 농지전용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -331,7 +367,8 @@ window.PROJECTS = [
   "scale": "3,000㎡ 이하",
   "capacity": "100kW",
   "zone": "계획관리지역",
-  "work": "개발행위, 산지전용허가"
+  "work": "개발행위, 산지전용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -340,7 +377,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "100kW",
   "zone": "보전관리지역",
-  "work": "개발행위, 농지전용허가"
+  "work": "개발행위, 농지전용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -349,7 +387,8 @@ window.PROJECTS = [
   "scale": "18,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위, 산지전용허가, 창업계획승인"
+  "work": "개발행위, 산지전용허가, 창업계획승인",
+  "count": 1
  },
  {
   "year": "2018",
@@ -358,7 +397,8 @@ window.PROJECTS = [
   "scale": "100㎡ 이하/ 30㎡ 이하",
   "capacity": "",
   "zone": "보전관리지역, 생산관리지역",
-  "work": "개인묘지허가, 가족묘지허가, 산지전용허가"
+  "work": "개인묘지허가, 가족묘지허가, 산지전용허가",
+  "count": 2
  },
  {
   "year": "2018",
@@ -367,7 +407,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "100kW",
   "zone": "계획관리지역",
-  "work": "개발행위, 농지전용허가"
+  "work": "개발행위, 농지전용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -376,7 +417,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "100kW",
   "zone": "계획관리지역",
-  "work": "개발행위, 농지전용허가"
+  "work": "개발행위, 농지전용허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -385,7 +427,8 @@ window.PROJECTS = [
   "scale": "9,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위허가, 공장변경승인"
+  "work": "개발행위허가, 공장변경승인",
+  "count": 1
  },
  {
   "year": "2018",
@@ -394,7 +437,8 @@ window.PROJECTS = [
   "scale": "16,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "지구단위변경승인"
+  "work": "지구단위변경승인",
+  "count": 1
  },
  {
   "year": "2018",
@@ -403,7 +447,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위허가"
+  "work": "개발행위허가",
+  "count": 1
  },
  {
   "year": "2018",
@@ -412,7 +457,8 @@ window.PROJECTS = [
   "scale": "2,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위허가"
+  "work": "개발행위허가",
+  "count": 1
  },
  {
   "year": "2019",
@@ -421,7 +467,8 @@ window.PROJECTS = [
   "scale": "4000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위,산지전용허가,도시계획심의"
+  "work": "개발행위,산지전용허가,도시계획심의",
+  "count": 1
  },
  {
   "year": "2019",
@@ -430,7 +477,8 @@ window.PROJECTS = [
   "scale": "2000㎡이하",
   "capacity": "",
   "zone": "자연녹지지역",
-  "work": "개발행위,산지전용허가,도시계획심의"
+  "work": "개발행위,산지전용허가,도시계획심의",
+  "count": 1
  },
  {
   "year": "2019",
@@ -439,7 +487,8 @@ window.PROJECTS = [
   "scale": "1000㎡이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위,농지전용허가,공유재산허가,국유재산허가"
+  "work": "개발행위,농지전용허가,공유재산허가,국유재산허가",
+  "count": 1
  },
  {
   "year": "2020",
@@ -448,7 +497,8 @@ window.PROJECTS = [
   "scale": "7000㎡이하",
   "capacity": "500kW",
   "zone": "계획관리지역,농림지역",
-  "work": "개발행위,농지전용허가,도시계획심의"
+  "work": "개발행위,농지전용허가,도시계획심의",
+  "count": 1
  },
  {
   "year": "2020",
@@ -457,7 +507,8 @@ window.PROJECTS = [
   "scale": "1000㎡이하",
   "capacity": "",
   "zone": "자연녹지지역",
-  "work": "개발행위,도로점용허가,산지전용허가"
+  "work": "개발행위,도로점용허가,산지전용허가",
+  "count": 1
  },
  {
   "year": "2020",
@@ -466,7 +517,8 @@ window.PROJECTS = [
   "scale": "1000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위,농지전용허가,국유재산허가"
+  "work": "개발행위,농지전용허가,국유재산허가",
+  "count": 1
  },
  {
   "year": "2021",
@@ -475,7 +527,8 @@ window.PROJECTS = [
   "scale": "5000㎡ 이하",
   "capacity": "",
   "zone": "생산녹지지역",
-  "work": "개발행위,농지타용도일시사용허가,도로점용허가"
+  "work": "개발행위,농지타용도일시사용허가,도로점용허가",
+  "count": 1
  },
  {
   "year": "2021",
@@ -484,7 +537,8 @@ window.PROJECTS = [
   "scale": "1000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위,산지전용허가,농지전용허가"
+  "work": "개발행위,산지전용허가,농지전용허가",
+  "count": 1
  },
  {
   "year": "2021",
@@ -493,7 +547,8 @@ window.PROJECTS = [
   "scale": "2000㎡ 이하",
   "capacity": "",
   "zone": "자연녹지지역",
-  "work": "개발행위,국유재산사용허가,농지전용허가,산지전용허가,도시계획심의"
+  "work": "개발행위,국유재산사용허가,농지전용허가,산지전용허가,도시계획심의",
+  "count": 1
  },
  {
   "year": "2021",
@@ -502,7 +557,8 @@ window.PROJECTS = [
   "scale": "2000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위,산지전용허가"
+  "work": "개발행위,산지전용허가",
+  "count": 1
  },
  {
   "year": "2021",
@@ -511,7 +567,8 @@ window.PROJECTS = [
   "scale": "3000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위,산지전용허가,농지전용허가"
+  "work": "개발행위,산지전용허가,농지전용허가",
+  "count": 1
  },
  {
   "year": "2022",
@@ -520,7 +577,8 @@ window.PROJECTS = [
   "scale": "3000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역,생산관리지역",
-  "work": "개발행위,산지전용허가,도로점용허가"
+  "work": "개발행위,산지전용허가,도로점용허가",
+  "count": 1
  },
  {
   "year": "2022",
@@ -529,7 +587,8 @@ window.PROJECTS = [
   "scale": "3000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위,산지전용허가,농지전용허가,목적외사용승인"
+  "work": "개발행위,산지전용허가,농지전용허가,목적외사용승인",
+  "count": 1
  },
  {
   "year": "2022",
@@ -538,7 +597,8 @@ window.PROJECTS = [
   "scale": "1000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위,농지전용허가"
+  "work": "개발행위,농지전용허가",
+  "count": 1
  },
  {
   "year": "2022",
@@ -547,7 +607,8 @@ window.PROJECTS = [
   "scale": "3000㎡ 이하",
   "capacity": "",
   "zone": "자연녹지지역",
-  "work": "개발행위,산지전용허가,농지전용허가"
+  "work": "개발행위,산지전용허가,농지전용허가",
+  "count": 1
  },
  {
   "year": "2022",
@@ -556,7 +617,8 @@ window.PROJECTS = [
   "scale": "5000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위,산지전용허가,국유재산허가"
+  "work": "개발행위,산지전용허가,국유재산허가",
+  "count": 1
  },
  {
   "year": "2023",
@@ -565,7 +627,8 @@ window.PROJECTS = [
   "scale": "2000㎡ 이하",
   "capacity": "",
   "zone": "자연녹지지역",
-  "work": "개발행위,산지전용허가"
+  "work": "개발행위,산지전용허가",
+  "count": 1
  },
  {
   "year": "2023",
@@ -574,7 +637,8 @@ window.PROJECTS = [
   "scale": "10,000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역,자연녹지지역",
-  "work": "개발행위,산지전용허가"
+  "work": "개발행위,산지전용허가",
+  "count": 1
  },
  {
   "year": "2023",
@@ -583,7 +647,8 @@ window.PROJECTS = [
   "scale": "1000㎡ 이하",
   "capacity": "",
   "zone": "계획관리지역",
-  "work": "개발행위,산지전용허가"
+  "work": "개발행위,산지전용허가",
+  "count": 1
  },
  {
   "year": "2023",
@@ -592,7 +657,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  },
  {
   "year": "2024",
@@ -601,7 +667,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  },
  {
   "year": "2024",
@@ -610,7 +677,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  },
  {
   "year": "2024",
@@ -619,7 +687,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  },
  {
   "year": "2025",
@@ -628,7 +697,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  },
  {
   "year": "2025",
@@ -637,7 +707,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  },
  {
   "year": "2025",
@@ -646,7 +717,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  },
  {
   "year": "2025",
@@ -655,7 +727,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  },
  {
   "year": "2026",
@@ -664,7 +737,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  },
  {
   "year": "2026",
@@ -673,7 +747,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  },
  {
   "year": "2026",
@@ -682,7 +757,8 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  },
  {
   "year": "2026",
@@ -691,6 +767,7 @@ window.PROJECTS = [
   "scale": "",
   "capacity": "",
   "zone": "",
-  "work": "측량설계"
+  "work": "측량설계",
+  "count": 1
  }
 ];

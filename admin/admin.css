@@ -83,6 +83,7 @@ input:invalid:not(:placeholder-shown) { border-color: var(--danger); }
 .c-meta { width: 26%; }
 .c-act { width: 72px; text-align: right; }
 td.meta { color: var(--ink-3); font-size: 14px; }
+.badge { display: inline-block; margin-left: 6px; padding: 0 6px; border-radius: 4px; background: rgba(46, 90, 69, .1); color: var(--green); font-size: 12px; font-weight: 500; line-height: 20px; vertical-align: 1px; }
 td.cat { color: var(--ink-2); font-size: 14px; }
 .empty-row td { text-align: center; color: var(--ink-3); padding: 32px; cursor: default; }
 

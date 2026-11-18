@@ -27,6 +27,12 @@ def get(d, path):
     return d
 
 
+def tel_href(num):
+    """전화 링크는 숫자만 (예: tel:0413560117) — 휴대폰마다 하이픈·공백 처리가 달라서"""
+    digits = re.sub(r'[^\d+]', '', str(num or ''))
+    return 'tel:' + digits
+
+
 def blocks(site):
     c = site['company']
     point = '<svg class="ic" aria-hidden="true"><use href="#i-point"/></svg>'
@@ -48,9 +54,9 @@ def blocks(site):
         addr += '<br>' + esc(c['addressDetail'])
     rows.append(('주소', addr))
     if c.get('tel'):
-        rows.append(('전화', f'<a href="tel:{esc(c["tel"])}">{esc(c["tel"])}</a>'))
+        rows.append(('전화', f'<a href="{esc(tel_href(c["tel"]))}">{esc(c["tel"])}</a>'))
     if c.get('mobile'):
-        rows.append(('휴대폰', f'<a href="tel:{esc(c["mobile"])}">{esc(c["mobile"])}</a>'))
+        rows.append(('휴대폰', f'<a href="{esc(tel_href(c["mobile"]))}">{esc(c["mobile"])}</a>'))
     if c.get('fax'):
         rows.append(('팩스', esc(c['fax'])))
     if c.get('email'):
@@ -72,7 +78,8 @@ def blocks(site):
         'contactList': contact_list,
         'tips': tips,
         'footer': footer,
-        'mapUrl': esc('https://map.naver.com/p/search/' + quote(c.get('address', ''))),
+        'telHref': esc(tel_href(c.get('tel'))),
+        'mapUrl':esc('https://map.naver.com/p/search/' + quote(c.get('address', ''))),
         'version': str(int(time.time())),
     }
 
@@ -93,7 +100,7 @@ def build():
     _write(ROOT / 'index.html', out)
 
     keep = ('year', 'category', 'name', 'scale', 'capacity', 'zone', 'work')
-    rows = [{k: str(p.get(k, '') or '') for k in keep} for p in projects]
+    rows = [{**{k: str(p.get(k, '') or '') for k in keep}, 'count': int(p.get('count') or 1)} for p in projects]
     js = ('// 이 파일은 build.py가 data/projects.json으로 자동 생성합니다. 직접 고치지 마세요.\n'
           'window.PROJECTS = ' + json.dumps(rows, ensure_ascii=False, indent=1) + ';\n')
     _write(ROOT / 'js' / 'projects.js', js)
