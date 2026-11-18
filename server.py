@@ -15,6 +15,7 @@ import sys
 import time
 from http.server import SimpleHTTPRequestHandler, ThreadingHTTPServer
 from pathlib import Path
+from urllib.parse import quote
 
 import build
 
@@ -97,6 +98,46 @@ def backup():
     return stamp
 
 
+def export_xlsx():
+    """저장된 실적을 엑셀 파일(바이트)로 만듦: 실적 시트 + 연도·분류별 합계 시트"""
+    from io import BytesIO
+    from openpyxl import Workbook
+    from openpyxl.styles import Alignment, Font, PatternFill
+    projects = json.loads((DATA / 'projects.json').read_text(encoding='utf-8'))
+    rows = sorted(enumerate(projects), key=lambda x: (x[1]['year'], x[0]), reverse=True)
+    wb = Workbook()
+    ws = wb.active
+    ws.title = '실적'
+    head = ['번호', '연도', '분류', '사업명', '건수', '규모', '용량', '용도지역', '업무']
+    ws.append(head)
+    for n, (_, p) in enumerate(rows, 1):
+        ws.append([n, int(p['year']), p['category'], p['name'], int(p.get('count') or 1),
+                   p.get('scale', ''), p.get('capacity', ''), p.get('zone', ''), p.get('work', '')])
+    ws.append(['', '', '합계', f'{len(projects)}개 항목', f'=SUM(E2:E{len(projects) + 1})'])
+    ws2 = wb.create_sheet('연도·분류별')
+    ws2.append(['연도', '분류', '항목 수', '건수'])
+    groups = {}
+    for p in projects:
+        g = groups.setdefault((p['year'], p['category']), [0, 0])
+        g[0] += 1
+        g[1] += int(p.get('count') or 1)
+    for (y, c), (k, cnt) in sorted(groups.items(), key=lambda x: (-int(x[0][0]), x[0][1])):
+        ws2.append([int(y), c, k, cnt])
+    fill = PatternFill('solid', fgColor='2E5A45')
+    for sh, widths in ((ws, [6, 7, 16, 48, 6, 18, 10, 18, 36]), (ws2, [7, 16, 9, 7])):
+        for i, w in enumerate(widths):
+            sh.column_dimensions[chr(65 + i)].width = w
+        for cell in sh[1]:
+            cell.font = Font(bold=True, color='FFFFFF')
+            cell.fill = fill
+            cell.alignment = Alignment(horizontal='center')
+        sh.freeze_panes = 'A2'
+    ws.cell(ws.max_row, 3).font = ws.cell(ws.max_row, 5).font = Font(bold=True)
+    buf = BytesIO()
+    wb.save(buf)
+    return buf.getvalue()
+
+
 def write_json(path, obj):
     tmp = path.with_suffix('.tmp')
     with tmp.open('w', encoding='utf-8', newline='\n') as f:
@@ -143,6 +184,22 @@ class Handler(SimpleHTTPRequestHandler):
             projects = json.loads((DATA / 'projects.json').read_text(encoding='utf-8'))
             backups = sorted((p.name for p in BACKUP.iterdir() if p.is_dir()), reverse=True) if BACKUP.exists() else []
             return self._json(200, {'site': site, 'projects': projects, 'backups': backups[:10]})
+        if path == '/api/export.xlsx':
+            if not self._local_only():
+                return
+            try:
+                body = export_xlsx()
+            except ImportError:
+                return self._json(500, {'error': '엑셀 기능에 필요한 openpyxl이 없습니다. python -m pip install openpyxl 후 다시 실행하세요'})
+            name = quote(f'동명측량설계_실적_{time.strftime("%Y%m%d")}.xlsx')
+            self.send_response(200)
+            self.send_header('Content-Type', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet')
+            self.send_header('Content-Disposition', f"attachment; filename=\"projects.xlsx\"; filename*=UTF-8''{name}")
+            self.send_header('Content-Length', str(len(body)))
+            self.send_header('Cache-Control', 'no-store')
+            self.end_headers()
+            self.wfile.write(body)
+            return
         return super().do_GET()
 
     def do_POST(self):

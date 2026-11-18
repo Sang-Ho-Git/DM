@@ -57,6 +57,7 @@ input:invalid:not(:placeholder-shown) { border-color: var(--danger); }
 /* 본문 */
 .wrap { max-width: 1120px; margin: 0 auto; padding: 32px 24px 96px; }
 .panel-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; margin-bottom: 20px; }
+.head-actions { display: flex; gap: 8px; flex-shrink: 0; }
 .hint { margin: 4px 0 16px; font-size: 13px; color: var(--ink-3); }
 .panel-head .hint { margin-bottom: 0; }
 .card { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 20px; display: grid; gap: 16px; margin-bottom: 16px; }

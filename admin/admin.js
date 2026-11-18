@@ -256,6 +256,12 @@
     }
   }
   $('#save').addEventListener('click', save);
+
+  // 엑셀 내려받기: 저장된 내용 기준이라, 저장 안 한 변경이 있으면 먼저 알려 줌
+  $('#export-xlsx').addEventListener('click', () => {
+    if (!$('#save').disabled) return toast('저장하지 않은 변경이 있습니다. 먼저 저장한 뒤 내려받으세요', true);
+    window.location.href = '/api/export.xlsx';
+  });
   document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 's') { e.preventDefault(); save(); }
   });
